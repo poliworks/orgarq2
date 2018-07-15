@@ -77,6 +77,12 @@ begin
         wait for period;
         s_start <= '0';
         
+        wait for period;
+        assert (s_r = "0000011111111111");
+        if (not (s_r = "0000011111111111")) then
+            report "Could not calc sin(pi/6)" severity error;
+        end if;
+        
         
     end process;
     

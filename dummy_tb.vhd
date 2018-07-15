@@ -50,8 +50,9 @@ architecture dummy_tb_arch of dummy_tb is
     signal vec1, vec2,vec3 : std_logic_vector(3 downto 0);
     signal bvec1 : std_logic_vector (7 downto 0);
     signal t1, t2, t3, t4 : std_logic_vector (15 downto 0);
+    signal d1: std_logic_vector(31 downto 0);
     signal r1, r2, r3 : real;
-    signal i1: integer;
+    signal i1, i2, i3, i4: integer;
 begin
     dummy_name: dummy port map(inX, inY, outF);
     notused <= not notused after half_period;
@@ -59,10 +60,14 @@ begin
     begin
         r1 <= 0.01;
         vec1 <= "0010";
-        vec2 <= "0100";
+        vec2 <= "1100";
         t1 <= "0010100000000000";
         r1 <= real(to_integer(signed(t1))) / 4096.0;
-        i1 <= integer(r1*4096.0);
+        i1 <= to_integer(signed(vec1));
+        i2 <= to_integer(signed(vec2));
+        i3 <= 2;
+        i4 <= 2*i2;
+        t3 <= std_logic_vector(to_unsigned(i4, 16));
         t2 <= std_logic_vector(to_unsigned(integer(r1*4096.0), 16));
         inX <= '0';
         inY <= '0';
