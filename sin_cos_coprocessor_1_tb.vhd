@@ -1,21 +1,21 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
+-- Company:
+-- Engineer:
+--
 -- Create Date: 14.07.2018 23:41:16
--- Design Name: 
+-- Design Name:
 -- Module Name: sin_cos_coprocessor_1_tb - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
+-- Project Name:
+-- Target Devices:
+-- Tool Versions:
+-- Description:
+--
+-- Dependencies:
+--
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+--
 ----------------------------------------------------------------------------------
 
 
@@ -45,7 +45,7 @@ architecture Behavioral of sin_cos_coprocessor_1_tb is
             r: out std_logic_vector(15 downto 0)
     );
     end component;
-    
+
     constant half_period : time := 10ns;
     constant period : time := 20ns;
     signal s_x : std_logic_vector(15 downto 0) := "0000000000000000";
@@ -64,27 +64,27 @@ begin
         done => s_done,
         r => s_r
     );
-    
+
     process
     begin
         s_reset <= '0';
         s_sc <= '1';
         s_x <= "0000100001100000"; -- 0.5234375 ~ pi/6
-        
+
         -- start pulse
         wait for period;
         s_start <= '1';
         wait for period;
         s_start <= '0';
-        
+
         wait for period;
         assert (s_r = "0000011111111111");
         if (not (s_r = "0000011111111111")) then
             report "Could not calc sin(pi/6)" severity error;
         end if;
-        
-        
+
+
     end process;
-    
+
 
 end architecture;

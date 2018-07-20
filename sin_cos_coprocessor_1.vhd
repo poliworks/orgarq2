@@ -1,21 +1,21 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
+-- Company:
+-- Engineer:
+--
 -- Create Date: 14.07.2018 22:02:23
--- Design Name: 
+-- Design Name:
 -- Module Name: sin_cos_coprocessor_1 - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
+-- Project Name:
+-- Target Devices:
+-- Tool Versions:
+-- Description:
+--
+-- Dependencies:
+--
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+--
 ----------------------------------------------------------------------------------
 
 
@@ -48,7 +48,7 @@ architecture Behavioral of sin_cos_coprocessor_1 is
     constant CSIN2: real := -1.0/6.0;
     constant CSIN3: real := 1.0/120.0;
     constant CSIN4: real := -1.0/5040.0;
-    
+
     signal real_x: real;
     signal real_x2: real;
     signal real_x3: real;
@@ -65,7 +65,7 @@ begin
             if (start = '1') then
                 real_x <= real(to_integer(signed(x))) / 4096.0;
                 real_x2 <= real_x*real_x;
-                
+
                 if (sc = '1') then
                 --sin
                     real_x3 <= real_x2*real_x;
@@ -75,16 +75,16 @@ begin
                     factor1 <= real_x3*CSIN2;
                     factor2 <= real_x5*CSIN3;
                     factor3 <= real_x7*CSIN4;
-                    
+
                     result <= factor0 + factor1 + factor2 + factor3;
                     r <= std_logic_vector(to_unsigned(integer(result*4096.0), 16));
                 else
                 --cos
                 end if;
-                
+
             end if;
-            
+
         end if;
-        
+
     end process;
 end Behavioral;

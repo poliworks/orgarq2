@@ -1,22 +1,22 @@
 
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
+-- Company:
+-- Engineer:
+--
 -- Create Date: 12.07.2018 22:14:21
--- Design Name: 
+-- Design Name:
 -- Module Name: dummy_test_sim - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
+-- Project Name:
+-- Target Devices:
+-- Tool Versions:
+-- Description:
+--
+-- Dependencies:
+--
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+--
 ----------------------------------------------------------------------------------
 
 
@@ -44,7 +44,7 @@ architecture dummy_tb_arch of dummy_tb is
             F: out std_logic
     );
     end component;
-    
+
     signal inX, inY, outF : std_logic;
     signal notused : std_logic := '0';
     signal vec1, vec2,vec3 : std_logic_vector(3 downto 0);
@@ -63,8 +63,8 @@ begin
         vec2 <= "1100";
         t1 <= "0010100000000000";
         r1 <= real(to_integer(signed(t1))) / 4096.0;
-        i1 <= to_integer(signed(vec1));
-        i2 <= to_integer(signed(vec2));
+        i1 <= to_integer(unsigned(vec1(2 downto 0)));
+        i2 <= to_integer(unsigned(vec2(2 downto 0)));
         i3 <= 2;
         i4 <= 2*i2;
         t3 <= std_logic_vector(to_unsigned(i4, 16));
