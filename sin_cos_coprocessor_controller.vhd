@@ -83,7 +83,7 @@ begin
           sel_mux1 <= "00";
           sel_mux2 <= "00";
           sel_mux3 <= "00";
-          sel_mux4 <= "00"; --
+          sel_mux4 <= "01"; --
           sel_mux5 <= "00";
           sel_mux6 <= "00";
           sel_mux7 <= "00";
@@ -109,8 +109,8 @@ begin
           ready <= '0';
       when "0010" => -- SSIN0
           r1_write <= '0';
-          r2_write <= '0';
-          r3_write <= '1'; --
+          r2_write <= '1'; --
+          r3_write <= '0';
           r4_write <= '0';
           sel_mux1 <= "00";
           sel_mux2 <= "01"; --
@@ -128,7 +128,7 @@ begin
           r2_write <= '0';
           r3_write <= '0';
           r4_write <= '0';
-          sel_mux1 <= "00"; --
+          sel_mux1 <= "01"; --
           sel_mux2 <= "00";
           sel_mux3 <= "00";
           sel_mux4 <= "00";

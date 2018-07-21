@@ -52,6 +52,7 @@ port (
     clock: in std_logic;
     gen_debug_logic: out std_logic;
     gen_debug: out std_logic_vector(15 downto 0);
+    gen_debug2: out std_logic_vector(15 downto 0);
     debug_r1: out std_logic_vector(15 downto 0);
     debug_r2: out std_logic_vector(15 downto 0);
     debug_r3: out std_logic_vector(15 downto 0);
@@ -127,12 +128,13 @@ begin
     connect_r2 <= s_out_mux2;
     connect_r3 <= s_out_mux3;
     connect_r4 <= s_out_mux4;
-    gen_debug <= s_out_mux4;
+    gen_debug <= s_out_mux8;
+    gen_debug2 <= s_out_mux9;
     debug_r1 <= s_r1;
     debug_r2 <= s_r2;
     debug_r3 <= s_r3;
     debug_r4 <= s_r4;
-    gen_debug_logic <= r1_write;
+    gen_debug_logic <= r4_write;
     result <= s_r4 when (ready = '1') else "0000000000000000";
 
     -- REGISTERS
@@ -229,7 +231,7 @@ begin
     );
     mux9: mux_4to1 port map(
         SEL => sel_mux9,
-        V1 => s_r2,
+        V1 => s_r3,
         V2 => s_r4,
         V3 => s_out_mux10,
         V4 => gnd,

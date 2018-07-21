@@ -28,6 +28,7 @@ architecture Behavioral of sin_cos_coprocessor_datapath_tb is
         clock: in std_logic;
         gen_debug_logic: out std_logic;
         gen_debug: out std_logic_vector(15 downto 0);
+        gen_debug2: out std_logic_vector(15 downto 0);
         debug_r1: out std_logic_vector(15 downto 0);
         debug_r2: out std_logic_vector(15 downto 0);
         debug_r3: out std_logic_vector(15 downto 0);
@@ -43,7 +44,7 @@ architecture Behavioral of sin_cos_coprocessor_datapath_tb is
     signal s_r1_write, s_r2_write, s_r3_write, s_r4_write: std_logic;
     signal s_sel_mux1, s_sel_mux2, s_sel_mux3, s_sel_mux4, s_sel_mux5, s_sel_mux6, s_sel_mux7, s_sel_mux8, s_sel_mux9, s_sel_mux10: std_logic_vector(1 downto 0);
     signal s_x, s_result: std_logic_vector(15 downto 0);
-    signal s_r1, s_r2, s_r3, s_r4, gen_debug: std_logic_vector(15 downto 0);
+    signal s_r1, s_r2, s_r3, s_r4, gen_debug, gen_debug2: std_logic_vector(15 downto 0);
     signal s_clock: std_logic := '0';
     signal s_ready, gen_debug_logic: std_logic;
 begin
@@ -69,6 +70,7 @@ begin
         clock => s_clock,
         gen_debug_logic => gen_debug_logic,
         gen_debug => gen_debug,
+        gen_debug2 => gen_debug2,
         debug_r1 => s_r1,
         debug_r2 => s_r2,
         debug_r3 => s_r3,
@@ -79,8 +81,8 @@ begin
     begin
         -- We are going to try to mock UC to run sin(pi/6) = 0.5
        -- s_x <= "0000100001100000"; -- 0.5234375 ~ pi/6
-        -- s_x <= "0001000011000001"; -- pi/3
-        s_x <= "0000010100000111"; -- sin pi/10 -> 0.309016994374  should be 1266
+        s_x <= "0001000011000001"; -- pi/3
+        --s_x <= "0000010100000111"; -- sin pi/10 -> 0.309016994374  should be 1266
         s_ready <= '0';
         s_r1_write <= '0';
         s_r2_write <= '0';
@@ -134,7 +136,7 @@ begin
         s_sel_mux9 <= "00";
         s_r2_write <= '0';
         -- work
-        s_sel_mux1 <= "00";
+        s_sel_mux1 <= "01";
         s_sel_mux6 <= "11";
         s_sel_mux7 <= "10";
         s_r1_write <= '1';
