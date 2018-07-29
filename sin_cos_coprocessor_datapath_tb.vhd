@@ -10,6 +10,7 @@ architecture Behavioral of sin_cos_coprocessor_datapath_tb is
     component sin_cos_coprocessor_datapath is
     port (
         x: in std_logic_vector(15 downto 0);
+        reset: in std_logic;
         r1_write: in std_logic;
         r2_write: in std_logic;
         r3_write: in std_logic;
@@ -46,12 +47,14 @@ architecture Behavioral of sin_cos_coprocessor_datapath_tb is
     signal s_x, s_result: std_logic_vector(15 downto 0);
     signal s_r1, s_r2, s_r3, s_r4, gen_debug, gen_debug2: std_logic_vector(15 downto 0);
     signal s_clock: std_logic := '0';
+    signal s_reset: std_logic := '0';
     signal s_ready, gen_debug_logic: std_logic;
 begin
     s_clock <= not s_clock after half_period;
 
     datapath: sin_cos_coprocessor_datapath port map(
         x => s_x,
+        reset => s_reset,
         r1_write => s_r1_write,
         r2_write => s_r2_write,
         r3_write => s_r3_write,
@@ -215,6 +218,10 @@ begin
 
         --work
         s_ready <= '1';
+
+        wait for period;
+        --Async reset
+        s_reset <= '1';
 
 
         wait for halt;

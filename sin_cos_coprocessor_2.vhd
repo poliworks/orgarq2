@@ -28,6 +28,7 @@ architecture Structural of sin_cos_coprocessor_2 is
     start: in std_logic;
     clock: in std_logic;
     sc: in std_logic;
+    reset: in std_logic;
 
     r1_write: out std_logic;
     r2_write: out std_logic;
@@ -51,6 +52,7 @@ architecture Structural of sin_cos_coprocessor_2 is
   component sin_cos_coprocessor_datapath is
   port (
       x: in std_logic_vector(15 downto 0);
+      reset: in std_logic;
       r1_write: in std_logic;
       r2_write: in std_logic;
       r3_write: in std_logic;
@@ -91,6 +93,7 @@ begin
   debug_state <= s_debug_state;
   datapath: sin_cos_coprocessor_datapath port map(
       x => x,
+      reset => reset,
       r1_write => s_r1_write,
       r2_write => s_r2_write,
       r3_write => s_r3_write,
@@ -120,6 +123,7 @@ begin
       start => start,
       clock => s_clock,
       sc => sc,
+      reset => reset,
       r1_write => s_r1_write,
       r2_write => s_r2_write,
       r3_write => s_r3_write,

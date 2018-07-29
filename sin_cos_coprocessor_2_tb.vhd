@@ -60,7 +60,7 @@ begin
     begin
         s_start <= '0';
         s_reset <= '0';
-        s_sc <= '1';
+        s_sc <= '0';
         --s_x <= "0000100001100000"; -- 0.5234375 ~ pi/6
         --s_x <= "0000010100000111"; -- sin pi/10 -> 0.309016994374  should be 1266
         s_x <= "0000110010010000"; -- pi/4
@@ -77,6 +77,14 @@ begin
             report "Could not calc sin(pi/6)" severity error;
         end if;
 
+        wait for 10*period;
+        s_reset <= '1';
+        wait for period;
+        s_reset <= '0';
+        assert (s_r = "0000000000000000");
+        if (not (s_r = "0000000000000000")) then
+            report "Could not reset" severity error;
+        end if;
         wait for halt;
     end process;
 
