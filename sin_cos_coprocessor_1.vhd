@@ -44,10 +44,16 @@ port(	x: in std_logic_vector(15 downto 0);
 end sin_cos_coprocessor_1;
 
 architecture Behavioral of sin_cos_coprocessor_1 is
+    --sin
     constant CSIN1: real := 1.0;
     constant CSIN2: real := -1.0/6.0;
     constant CSIN3: real := 1.0/120.0;
     constant CSIN4: real := -1.0/5040.0;
+    -- cos
+    constant CCOS1: real := 1.0;
+    constant CCOS2: real := -1.0/2.0;
+    constant CCOS3: real := 1.0/24.0;
+    constant CCOS4: real := -1.0/720.0;
 
     signal real_x: real;
     signal real_x2: real;
@@ -59,32 +65,31 @@ architecture Behavioral of sin_cos_coprocessor_1 is
     signal factor0, factor1, factor2, factor3: real;
     signal result: real;
 begin
-    process(clock)
+    process(clock, reset)
     begin
-        if (clock'event and clock = '1') then
-            if (start = '1') then
-                real_x <= real(to_integer(signed(x))) / 4096.0;
-                real_x2 <= real_x*real_x;
-
-                if (sc = '1') then
-                --sin
-                    real_x3 <= real_x2*real_x;
-                    real_x5 <= real_x3*real_x2;
-                    real_x7 <= real_x5*real_x2;
-                    factor0 <= real_x*CSIN1;
-                    factor1 <= real_x3*CSIN2;
-                    factor2 <= real_x5*CSIN3;
-                    factor3 <= real_x7*CSIN4;
-
-                    result <= factor0 + factor1 + factor2 + factor3;
+        if (reset = '1') then
+            r <= "0000000000000000";
+        else
+            if (clock'event and clock = '1') then
+                if (start = '1') then
                     r <= std_logic_vector(to_unsigned(integer(result*4096.0), 16));
-                else
-                --cos
                 end if;
-
             end if;
-
         end if;
-
     end process;
+
+    factor0 <= real_x*CSIN1 when (sc = '1') else 1.0*CCOS1;
+    factor1 <= real_x3*CSIN2 when (sc = '1') else real_x2*CCOS2;
+    factor2 <= real_x5*CSIN3 when (sc = '1') else real_x4*CCOS3;
+    factor3 <= real_x7*CSIN4 when (sc = '1') else real_x6*CCOS4;
+    result <= factor0 + factor1 + factor2 + factor3;
+    real_x <= real(to_integer(signed(x))) / 4096.0;
+    real_x2 <= real_x*real_x;
+
+    real_x3 <= real_x2*real_x;
+    real_x5 <= real_x3*real_x2;
+    real_x7 <= real_x5*real_x2;
+
+    real_x4 <= real_x2*real_x2;
+    real_x6 <= real_x4*real_x2;
 end Behavioral;
