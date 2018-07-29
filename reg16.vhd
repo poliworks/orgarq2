@@ -34,6 +34,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity reg16 is
 port (
     new_value: in std_logic_vector(15 downto 0);
+    reset: in std_logic;
     write: in std_logic;
     clock: in std_logic;
     value: out std_logic_vector(15 downto 0)
@@ -44,11 +45,15 @@ architecture Behavioral of reg16 is
     signal s_value: std_logic_vector(15 downto 0) := "0000000000000000";
 begin
     value <= s_value;
-    process(clock)
+    process(clock, reset)
     begin
-        if (clock'event and clock = '1') then
-            if(write = '1') then
-                s_value <= new_value;
+        if (reset = '1') then
+            s_value <= "0000000000000000";
+        else
+            if (clock'event and clock = '1') then
+                if(write = '1') then
+                    s_value <= new_value;
+                end if;
             end if;
         end if;
     end process;

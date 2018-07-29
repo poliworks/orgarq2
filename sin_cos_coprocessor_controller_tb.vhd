@@ -12,6 +12,7 @@ architecture Behavioral of sin_cos_coprocessor_controller_tb is
       start: in std_logic;
       clock: in std_logic;
       sc: in std_logic;
+      reset: in std_logic;
 
       r1_write: out std_logic;
       r2_write: out std_logic;
@@ -39,7 +40,7 @@ architecture Behavioral of sin_cos_coprocessor_controller_tb is
     signal s_r1_write, s_r2_write, s_r3_write, s_r4_write: std_logic;
     signal s_sel_mux1, s_sel_mux2, s_sel_mux3, s_sel_mux4, s_sel_mux5, s_sel_mux6, s_sel_mux7, s_sel_mux8, s_sel_mux9, s_sel_mux10: std_logic_vector(1 downto 0);
     signal s_debug_state: std_logic_vector(3 downto 0);
-    signal s_clock: std_logic := '0';
+    signal s_clock, s_reset: std_logic := '0';
     signal s_ready, s_start, s_sc: std_logic;
 begin
     s_clock <= not s_clock after half_period;
@@ -48,6 +49,7 @@ begin
         start => s_start,
         clock => s_clock,
         sc => s_sc,
+        reset => s_reset,
         r1_write => s_r1_write,
         r2_write => s_r2_write,
         r3_write => s_r3_write,
@@ -129,6 +131,24 @@ begin
         if (not (s_debug_state = "0000")) then
             report "Move to S0 incondionally" severity error;
         end if;
+
+
+        s_start <= '1';
+        wait for period;
+        s_start <= '0';
+        s_sc <= '1';
+        assert (s_debug_state = "0001");
+        if (not (s_debug_state = "0001")) then
+            report "Move to S1 on start again" severity error;
+        end if;
+
+        wait for period;
+        s_reset <= '1';
+        assert (s_debug_state = "0000");
+        if (not (s_debug_state = "0000")) then
+            report "Move to S0 on reset" severity error;
+        end if;
+
         wait for halt;
     end process;
 end architecture;
