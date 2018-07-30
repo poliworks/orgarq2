@@ -65,37 +65,31 @@ architecture Behavioral of sin_cos_coprocessor_1 is
     signal factor0, factor1, factor2, factor3: real;
     signal result: real;
 begin
-    process(clock)
+    process(clock, reset)
     begin
-        if (clock'event and clock = '1') then
-            if (start = '1') then
-                real_x <= real(to_integer(signed(x))) / 4096.0;
-                real_x2 <= real_x*real_x;
-
-                if (sc = '1') then
-                --sin
-                    real_x3 <= real_x2*real_x;
-                    real_x5 <= real_x3*real_x2;
-                    real_x7 <= real_x5*real_x2;
-                    factor0 <= real_x*CSIN1;
-                    factor1 <= real_x3*CSIN2;
-                    factor2 <= real_x5*CSIN3;
-                    factor3 <= real_x7*CSIN4;
-                else
-                --cos
-		    real_x4 <= real_x2*real_x2;
-                    real_x6 <= real_x4*real_x2;
-                    factor0 <= 1*CCOS1;
-		    factor1 <= real_x2*CCOS2;
-	            factor2 <= real_x4*CCOS3;
-                    factor3 <= real_x6*CCOS4;
+        if (reset = '1') then
+            r <= "0000000000000000";
+        else
+            if (clock'event and clock = '1') then
+                if (start = '1') then
+                    r <= std_logic_vector(to_unsigned(integer(result*4096.0), 16));
                 end if;
-			
-                result <= factor0 + factor1 + factor2 + factor3;
-                r <= std_logic_vector(to_unsigned(integer(result*4096.0), 16));
             end if;
-
         end if;
-
     end process;
+
+    factor0 <= real_x*CSIN1 when (sc = '1') else 1.0*CCOS1;
+    factor1 <= real_x3*CSIN2 when (sc = '1') else real_x2*CCOS2;
+    factor2 <= real_x5*CSIN3 when (sc = '1') else real_x4*CCOS3;
+    factor3 <= real_x7*CSIN4 when (sc = '1') else real_x6*CCOS4;
+    result <= factor0 + factor1 + factor2 + factor3;
+    real_x <= real(to_integer(signed(x))) / 4096.0;
+    real_x2 <= real_x*real_x;
+
+    real_x3 <= real_x2*real_x;
+    real_x5 <= real_x3*real_x2;
+    real_x7 <= real_x5*real_x2;
+
+    real_x4 <= real_x2*real_x2;
+    real_x6 <= real_x4*real_x2;
 end Behavioral;

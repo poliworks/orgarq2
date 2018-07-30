@@ -48,6 +48,7 @@ architecture Behavioral of sin_cos_coprocessor_1_tb is
 
     constant half_period : time := 10ns;
     constant period : time := 20ns;
+    constant halt : time := 10000ns;
     signal s_x : std_logic_vector(15 downto 0) := "0000000000000000";
     signal s_r : std_logic_vector(15 downto 0);
     signal s_clk : std_logic := '0';
@@ -67,6 +68,7 @@ begin
 
     process
     begin
+        --sin
         s_reset <= '0';
         s_sc <= '1';
         s_x <= "0000100001100000"; -- 0.5234375 ~ pi/6
@@ -77,13 +79,39 @@ begin
         wait for period;
         s_start <= '0';
 
-        wait for period;
+        wait for period*10;
         assert (s_r = "0000011111111111");
         if (not (s_r = "0000011111111111")) then
             report "Could not calc sin(pi/6)" severity error;
         end if;
 
+--        wait for halt;
+        --reset
+        wait for period*10;
+        s_reset <= '1';
+        wait for half_period;
+        s_reset <= '0';
+        s_start <= '0';
+        wait for half_period;
 
+        wait for period*2;
+        --cos
+        s_sc <= '0';
+        s_x <= "0001000011000001"; -- pi/3
+        --s_x <= "0000100001100000"; -- 0.5234375 ~ pi/6
+
+        -- start pulse
+        wait for period;
+        s_start <= '1';
+        wait for period;
+        s_start <= '0';
+
+        wait for period;
+        assert (s_r = "0000011111111111");
+        if (not (s_r = "0000011111111111")) then
+            report "Could not calc cos(pi/3)" severity error;
+        end if;
+        wait for halt;
     end process;
 
 
