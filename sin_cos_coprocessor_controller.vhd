@@ -7,7 +7,7 @@ port (
     start: in std_logic;
     clock: in std_logic;
     sc: in std_logic;
-
+    reset: in std_logic;
     r1_write: out std_logic;
     r2_write: out std_logic;
     r3_write: out std_logic;
@@ -31,45 +31,49 @@ architecture Behavioral of sin_cos_coprocessor_controller is
     signal state: std_logic_vector(3 downto 0) := "0000";
 begin
   debug_state <= state;
-  process(clock)
+  process(clock, reset)
   begin
-    if (clock'event and clock = '1') then
-      case state is
-        when "0000" =>
-          if (start = '1') then
-            state <= "0001";
-          end if;
-        when "0001" =>
-          if (sc = '1') then
-            state <= "0010";
-          else
-            state <= "0111";
-          end if;
-        when "0010" =>
-          state <= "0011";
-        when "0011" =>
-          state <= "0100";
-        when "0100" =>
-          state <= "0101";
-        when "0101" =>
-          state <= "0110";
-        when "0110" =>
-          state <= "1011";
-        when "0111" =>
-          state <= "1000";
-        when "1000" =>
-          state <= "1001";
-        when "1001" =>
-          state <= "1010";
-        when "1010" =>
-          state <= "1011";
-        when "1011" =>
-          state <= "1100";
-        when "1100" => -- done
-          state <= "0000";
-        when others =>
-          state <= "0000";
-      end case;
+    if (reset = '1') then
+        state <= "0000";
+    else
+        if (clock'event and clock = '1') then
+          case state is
+            when "0000" =>
+              if (start = '1') then
+                state <= "0001";
+              end if;
+            when "0001" =>
+              if (sc = '1') then
+                state <= "0010";
+              else
+                state <= "0111";
+              end if;
+            when "0010" =>
+              state <= "0011";
+            when "0011" =>
+              state <= "0100";
+            when "0100" =>
+              state <= "0101";
+            when "0101" =>
+              state <= "0110";
+            when "0110" =>
+              state <= "1011";
+            when "0111" =>
+              state <= "1000";
+            when "1000" =>
+              state <= "1001";
+            when "1001" =>
+              state <= "1010";
+            when "1010" =>
+              state <= "1011";
+            when "1011" =>
+              state <= "1100";
+            when "1100" => -- done
+              state <= "0000";
+            when others =>
+              state <= "0000";
+          end case;
+        end if;
     end if;
   end process;
   process(state)

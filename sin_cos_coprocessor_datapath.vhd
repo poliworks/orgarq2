@@ -34,6 +34,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity sin_cos_coprocessor_datapath is
 port (
     x: in std_logic_vector(15 downto 0);
+    reset: in std_logic;
     r1_write: in std_logic;
     r2_write: in std_logic;
     r3_write: in std_logic;
@@ -73,6 +74,7 @@ architecture Behavioral of sin_cos_coprocessor_datapath is
     component reg16 is
     port (
         new_value: in std_logic_vector(15 downto 0);
+        reset: in std_logic;
         write: in std_logic;
         clock: in std_logic;
         value: out std_logic_vector(15 downto 0)
@@ -140,24 +142,28 @@ begin
     -- REGISTERS
     r1: reg16 port map(
         new_value => s_out_mux1,
+        reset => reset,
         write => r1_write,
         clock => s_clock,
         value => s_r1
     );
     r2: reg16 port map(
         new_value => s_out_mux2,
+        reset => reset,
         write => r2_write,
         clock => s_clock,
         value => s_r2
     );
     r3: reg16 port map(
         new_value => s_out_mux3,
+        reset => reset,
         write => r3_write,
         clock => s_clock,
         value => s_r3
     );
     r4: reg16 port map(
         new_value => s_out_mux4,
+        reset => reset,
         write => r4_write,
         clock => s_clock,
         value => s_r4
