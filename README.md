@@ -1,7 +1,7 @@
 # Rodando as simulações
 1. Crie um projeto no Vivado 2018.2
 
-![Tela de Criação de Projeto](https://github.com/poliworks/orgarq2/raw/master/img/TelaCriacaoProjeto.png)
+![Tela de Criação de Projeto](https://github.com/poliworks/orgarq2/raw/master/img/TelaCriacaoProjeto.PNG)
 
 - Atenção: o path do projeto (na imagem, "C:/VivadoProjects/orgarq/grupo3") não pode conter espaços e/ou caracteres especiais.
 
@@ -22,7 +22,6 @@
 ![Set as Top](https://github.com/poliworks/orgarq2/raw/master/img/SetAsTop.PNG)
 - Com botão direito, selecione "Set as Top" no componente testbench relacionado.
 
-![Run](https://github.com/poliworks/orgarq2/raw/master/img/Run.PNG)
 - Rode a simulação
 
 ![Real Settings](https://github.com/poliworks/orgarq2/raw/master/img/RealSettings.PNG)
