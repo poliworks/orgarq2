@@ -1,25 +1,28 @@
 # Rodando as simulações
 1. Crie um projeto no Vivado 2018.2
 
-![Tela de Criação de Projeto](http://prntscr.com/kd5u22)
+![Tela de Criação de Projeto](https://github.com/poliworks/orgarq2/raw/master/img/TelaCriacaoProjeto.png)
 
 - Atenção: o path do projeto (na imagem, "C:/VivadoProjects/orgarq/grupo3") não pode conter espaços e/ou caracteres especiais.
 
-  ![Tela de Seleção de Tipo de Projeto](http://prntscr.com/kd5ucm)
+  ![Tela de Seleção de Tipo de Projeto](https://github.com/poliworks/orgarq2/raw/master/img/SelecaoTipoProjeto.PNG)
 
 - Selecione Projeto RTL
-![Tela de Seleção de Fontes](http://prntscr.com/kd5uvn)
-![Tela Preenchida de Seleção de Fontes](http://prntscr.com/kd5vcw)
+![Tela de Seleção de Fontes](https://github.com/poliworks/orgarq2/raw/master/img/SelecaoFontes.png)
+
+![Tela Preenchida de Seleção de Fontes](https://github.com/poliworks/orgarq2/raw/master/img/SelecaoFontesPreenchida.PNG)
 
 - Adicione os arquivos
 
-![Tela de Seleção de Parte](http://prntscr.com/kd5vlx)
+![Tela de Seleção de Parte](https://github.com/poliworks/orgarq2/raw/master/img/SelecaoPlaca.PNG)
 
 - Selecione a placa Nexys 4 DDR. Caso ela não exista, siga o tutorial desse link:
 2. Selecione o componente
-![Set as Top](http://prntscr.com/kd5wef)
+
+![Set as Top](https://github.com/poliworks/orgarq2/raw/master/img/SetAsTop.PNG)
 - Com botão direito, selecione "Set as Top" no componente testbench relacionado.
-![Run](http://prntscr.com/kd5wou)
+
+![Run](https://github.com/poliworks/orgarq2/raw/master/img/Run.PNG)
 - Rode a simulação
 
 ![Real Settings](https://github.com/poliworks/orgarq2/raw/master/img/RealSettings.PNG)
