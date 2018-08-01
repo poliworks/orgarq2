@@ -5,7 +5,7 @@
 
 - Atenção: o path do projeto (na imagem, "C:/VivadoProjects/orgarq/grupo3") não pode conter espaços e/ou caracteres especiais.
 
-![Tela de Seleção de Tipo de Projeto](http://prntscr.com/kd5ucm)
+  ![Tela de Seleção de Tipo de Projeto](http://prntscr.com/kd5ucm)
 
 - Selecione Projeto RTL
 ![Tela de Seleção de Fontes](http://prntscr.com/kd5uvn)
@@ -22,6 +22,6 @@
 ![Run](http://prntscr.com/kd5wou)
 - Rode a simulação
 
-![Real Settings](http://prntscr.com/kd5xl8)
-
+![Real Settings](https://github.com/poliworks/orgarq2/raw/master/img/RealSettings.PNG)
+![Fixed Point](https://github.com/poliworks/orgarq2/raw/master/img/FixedPoint.png)
 - Depois de acertar a escala de visualização, mude os sinais relevantes para representação em ponto fixo com 12 casas decimais e com sinal (signed).
